@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrumGroup - Özel Waitlist</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-glow: rgba(255, 255, 255, 0.8);
+            --secondary-glow: rgba(255, 255, 255, 0.5);
+            --accent-color: #7289da;
+            --danger-color: #ff4d4d;
+            --success-color: #4dff88;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.03) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 20%),
+                linear-gradient(135deg, rgba(20, 20, 30, 0.9) 0%, rgba(10, 10, 15, 0.9) 100%);
+            overflow-x: hidden;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.5);
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-container {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: #ffffff;
+            text-shadow: 
+                0 0 10px var(--primary-glow),
+                0 0 20px var(--secondary-glow),
+                0 0 30px rgba(255, 255, 255, 0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary-glow), transparent);
+            border-radius: 50%;
+            filter: blur(1px);
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 
+                    0 0 10px var(--primary-glow),
+                    0 0 20px var(--secondary-glow),
+                    0 0 30px rgba(255, 255, 255, 0.3);
+            }
+            to {
+                text-shadow: 
+                    0 0 15px var(--primary-glow),
+                    0 0 25px var(--secondary-glow),
+                    0 0 35px rgba(255, 255, 255, 0.4),
+                    0 0 45px rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            margin-bottom: 50px;
+            color: #cccccc;
+            line-height: 1.6;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .rules-container {
+            background: linear-gradient(145deg, rgba(25, 25, 35, 0.9), rgba(15, 15, 25, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rules-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary-glow), transparent);
+        }
+
+        .rules-title {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .rules-list {
+            text-align: left;
+            list-style-type: none;
+        }
+
+        .rules-list li {
+            margin-bottom: 20px;
+            padding-left: 40px;
+            position: relative;
+            line-height: 1.6;
+            font-size: 1.05rem;
+        }
+
+        .rules-list li:before {
+            content: "•";
+            position: absolute;
+            left: 15px;
+            color: var(--primary-glow);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+            font-size: 1.5rem;
+        }
+
+        .warning {
+            color: var(--danger-color);
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 77, 77, 0.5);
+        }
+
+        .waitlist-form {
+            background: linear-gradient(145deg, rgba(25, 25, 35, 0.9), rgba(15, 15, 25, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .waitlist-form::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary-glow), transparent);
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            font-size: 1.05rem;
+            color: #e0e0e0;
+        }
+
+        .required::after {
+            content: " *";
+            color: var(--danger-color);
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.5);
+            z-index: 1;
+        }
+
+        .input-with-icon input, .input-with-icon textarea {
+            padding-left: 45px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(20, 20, 30, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            resize: vertical;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            background: rgba(25, 25, 40, 0.8);
+        }
+
+        .word-count {
+            font-size: 0.85rem;
+            color: #aaaaaa;
+            margin-top: 8px;
+            text-align: right;
+            transition: color 0.3s;
+        }
+
+        .word-count.warning {
+            color: var(--danger-color);
+        }
+
+        .word-count.success {
+            color: var(--success-color);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, rgba(50, 50, 60, 0.9), rgba(20, 20, 30, 0.9));
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .submit-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, rgba(60, 60, 70, 0.9), rgba(30, 30, 40, 0.9));
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:disabled {
+            background: rgba(40, 40, 40, 0.5);
+            color: #666666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .submit-btn:disabled::before {
+            display: none;
+        }
+
+        .note {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #aaaaaa;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .capacity {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(145deg, rgba(25, 25, 35, 0.9), rgba(15, 15, 25, 0.9));
+            border-radius: 10px;
+            font-size: 1rem;
+            color: #cccccc;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .capacity::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+        }
+
+        .capacity strong {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #777777;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.8rem;
+            }
+            
+            .rules-container, .waitlist-form {
+                padding: 25px;
+            }
+            
+            .content-grid {
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 2.2rem;
+            }
+            
+            .rules-container, .waitlist-form {
+                padding: 20px;
+            }
+            
+            .rules-list li {
+                padding-left: 30px;
+            }
+            
+            .rules-list li:before {
+                left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements" id="floatingElements"></div>
+    
+    <div class="container">
+        <div class="logo-container">
+            <h1 class="logo">FrumGroup</h1>
+        </div>
+        <p class="tagline">Gizlilik, güvenlik ve özgünlük odaklı seçkin topluluk platformu</p>
+        
+        <div class="content-grid">
+            <div class="rules-container">
+                <h2 class="rules-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Waitlist Kuralları
+                </h2>
+                <ul class="rules-list">
+                    <li>Grup içi bilgileri dışarı sızdırmak <span class="warning">kesinlikle yasaktır</span>. Bu tür davranışlar üyeler için <span class="warning">büyük tehlike</span> oluşturabilir ve yasal işlemlere sebep olabilir.</li>
+                    <li>Waitlist'e kaydolan üyeler <span class="warning">1 ila 3 ay</span> içerisinde değerlendirilecek ve uygun görülenler gruba davet edilecektir. Değerlendirme süreci titizlikle yürütülmektedir.</li>
+                </ul>
+            </div>
+            
+            <div class="waitlist-form">
+                <h2 class="form-title">
+                    <i class="fas fa-user-plus"></i>
+                    Waitlist'e Katılın
+                </h2>
+                <form id="waitlistForm">
+                    <div class="form-group">
+                        <label for="name" class="required">Adınız Soyadınız</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="required">E-posta Adresiniz</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="discord" class="required">Discord Kullanıcı Adınız</label>
+                        <div class="input-with-icon">
+                            <i class="fab fa-discord"></i>
+                            <input type="text" id="discord" name="discord" placeholder="KullanıcıAdı#1234" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="purpose" class="required">Katılma Amacınız</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-pen"></i>
+                            <textarea id="purpose" name="purpose" rows="4" placeholder="FrumGroup'a katılma amacınızı kısaca açıklayın (en az 3 kelime)..." required></textarea>
+                        </div>
+                        <div id="wordCount" class="word-count warning">0/3 kelime</div>
+                    </div>
+                    <button type="submit" class="submit-btn" id="submitBtn" disabled>
+                        <i class="fas fa-paper-plane"></i> Waitlist'e Katıl
+                    </button>
+                </form>
+                <p class="note">Waitlist'e kaydolduğunuzda yukarıdaki kuralları kabul etmiş sayılırsınız.</p>
+            </div>
+        </div>
+        
+        <div class="capacity">
+            <p><i class="fas fa-users"></i> Not: FrumGroup'un şu anki kapasitesi <strong>4 kişi</strong> ile sınırlıdır. Yeni üyeler mevcut kapasiteye göre değerlendirilecektir.</p>
+        </div>
+        
+        <div class="footer">
+            <p>FrumGroup &copy; 2023 - Tüm hakları saklıdır.</p>
+        </div>
+    </div>
+
+    <script>
+        // Floating elements oluştur
+        const floatingContainer = document.getElementById('floatingElements');
+        for (let i = 0; i < 20; i++) {
+            const element = document.createElement('div');
+            element.classList.add('floating-element');
+            element.style.left = `${Math.random() * 100}%`;
+            element.style.animationDelay = `${Math.random() * 15}s`;
+            element.style.animationDuration = `${15 + Math.random() * 10}s`;
+            floatingContainer.appendChild(element);
+        }
+
+        const purposeTextarea = document.getElementById('purpose');
+        const wordCountDisplay = document.getElementById('wordCount');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        // Kelime sayısını kontrol etme
+        purposeTextarea.addEventListener('input', function() {
+            const text = this.value.trim();
+            const wordCount = text === '' ? 0 : text.split(/\s+/).length;
+            
+            wordCountDisplay.textContent = `${wordCount}/3 kelime`;
+            
+            if (wordCount < 3) {
+                wordCountDisplay.className = 'word-count warning';
+            } else {
+                wordCountDisplay.className = 'word-count success';
+            }
+            
+            checkFormValidity();
+        });
+        
+        // Diğer alanların değişimini de dinle
+        document.getElementById('name').addEventListener('input', checkFormValidity);
+        document.getElementById('email').addEventListener('input', checkFormValidity);
+        document.getElementById('discord').addEventListener('input', checkFormValidity);
+        
+        function checkFormValidity() {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const discord = document.getElementById('discord').value.trim();
+            const purpose = document.getElementById('purpose').value.trim();
+            const wordCount = purpose === '' ? 0 : purpose.split(/\s+/).length;
+            
+            submitBtn.disabled = !(name && email && discord && wordCount >= 3);
+        }
+        
+        // Form gönderimi
+        document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const discord = document.getElementById('discord').value;
+            const purpose = document.getElementById('purpose').value;
+            
+            // Yükleme efekti
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gönderiliyor...';
+            submitBtn.disabled = true;
+            
+            // Simüle edilmiş API isteği
+            setTimeout(() => {
+                // Başarılı gönderim efekti
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> Başarıyla Gönderildi!';
+                submitBtn.style.background = 'linear-gradient(135deg, rgba(30, 80, 50, 0.9), rgba(20, 60, 40, 0.9))';
+                
+                setTimeout(() => {
+                    alert(`Teşekkürler ${name}! Waitlist'e başarıyla kaydoldunuz. 1-3 ay içinde sizinle iletişime geçilecektir.`);
+                    
+                    // Formu sıfırla
+                    document.getElementById('waitlistForm').reset();
+                    wordCountDisplay.textContent = "0/3 kelime";
+                    wordCountDisplay.className = 'word-count warning';
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Waitlist\'e Katıl';
+                    submitBtn.style.background = '';
+                    submitBtn.disabled = true;
+                }, 1000);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
